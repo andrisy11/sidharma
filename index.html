@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SI-DHARMA Ecosystem - Universitas Terbuka</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Arial,sans-serif}
+body{background:#f4f7fb;color:#1f2937}
+.sidebar{position:fixed;left:0;top:0;width:255px;height:100vh;background:linear-gradient(180deg,#063b75,#0874c9);color:#fff;padding:24px 17px;z-index:10}
+.logo{text-align:center;margin-bottom:28px}
+.logo-icon{width:62px;height:62px;background:#fff;color:#075ca8;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:auto;font-size:22px;font-weight:800}
+.logo h2{font-size:19px;margin-top:10px;letter-spacing:.5px}
+.logo p{font-size:11px;opacity:.8;margin-top:4px}
+.menu{list-style:none}
+.menu li{margin:5px 0}
+.menu a{display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:9px;color:#fff;text-decoration:none;font-size:13px;transition:.2s}
+.menu a:hover,.menu a.active{background:rgba(255,255,255,.17)}
+.menu-title{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:.6;margin:22px 13px 7px}
+.main{margin-left:255px;padding:25px 34px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:23px}
+.header h1{font-size:25px;color:#063b75}
+.header p{font-size:13px;color:#6b7280;margin-top:4px}
+.profile{background:#fff;border-radius:11px;padding:10px 15px;box-shadow:0 3px 13px rgba(0,0,0,.05);font-size:12px}
+.hero{background:linear-gradient(120deg,#075ca8,#1295d8);color:#fff;border-radius:18px;padding:30px;margin-bottom:25px;box-shadow:0 10px 25px rgba(0,80,160,.13)}
+.hero h2{font-size:25px;margin-bottom:8px}
+.hero p{max-width:800px;line-height:1.6;font-size:14px;opacity:.93}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.16);padding:6px 11px;border-radius:20px;font-size:11px;margin-bottom:13px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;margin-bottom:28px}
+.stat{background:#fff;border-radius:14px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.stat .icon{font-size:20px;margin-bottom:9px}
+.stat .number{font-size:25px;font-weight:800;color:#075ca8}
+.stat p{font-size:11px;color:#6b7280;margin-top:3px}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:15px}
+.section-head h2{font-size:20px;color:#063b75}
+.section-head p{font-size:12px;color:#6b7280;margin-top:4px}
+.searchbox{background:#fff;border:1px solid #e5e7eb;border-radius:9px;padding:10px 13px;width:260px;outline:none}
+.filters{display:flex;gap:9px;margin-bottom:18px;flex-wrap:wrap}
+.filter{border:1px solid #dbe3ec;background:#fff;color:#4b5563;padding:8px 14px;border-radius:20px;font-size:12px;cursor:pointer}
+.filter.active,.filter:hover{background:#075ca8;color:#fff;border-color:#075ca8}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border-radius:15px;padding:20px;box-shadow:0 4px 16px rgba(0,0,0,.055);transition:.25s;border-top:4px solid #075ca8}
+.card:hover{transform:translateY(-4px);box-shadow:0 9px 25px rgba(0,0,0,.1)}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.product-icon{width:46px;height:46px;border-radius:12px;background:#e8f3ff;display:flex;align-items:center;justify-content:center;font-size:21px}
+.badge{font-size:10px;padding:5px 8px;border-radius:12px;background:#eaf7ee;color:#16803c}
+.badge.process{background:#fee2e2;color:#dc2626}
+.card h3{font-size:16px;color:#063b75;margin:14px 0 6px}
+.card .owner{font-size:11px;color:#075ca8;font-weight:600}
+.card p{font-size:12px;line-height:1.55;color:#6b7280;margin:10px 0 14px}
+.meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
+.meta span{font-size:10px;background:#f3f6fa;padding:5px 7px;border-radius:5px;color:#64748b}
+.btn{display:inline-block;background:#075ca8;color:#fff;border:0;padding:8px 12px;border-radius:7px;text-decoration:none;font-size:11px;cursor:pointer}
+.btn.secondary{background:#eef5fb;color:#075ca8;margin-left:5px}
+.empty{display:none;text-align:center;background:#fff;padding:30px;border-radius:14px;color:#6b7280}
+footer{text-align:center;color:#9ca3af;font-size:11px;padding:30px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:#fff;width:min(560px,100%);border-radius:17px;padding:25px;position:relative}
+.close{position:absolute;right:18px;top:15px;border:0;background:#f1f5f9;border-radius:50%;width:30px;height:30px;cursor:pointer}
+.modal-box h2{color:#063b75;margin-bottom:5px}
+.modal-box .owner{font-size:12px;color:#075ca8;font-weight:600}
+.modal-box p{font-size:13px;line-height:1.6;color:#64748b;margin:16px 0}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail{background:#f7f9fc;padding:12px;border-radius:9px}
+.detail b{display:block;font-size:10px;color:#64748b;margin-bottom:4px}
+.detail span{font-size:12px;color:#1f2937}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}.products{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:750px){.sidebar{position:relative;width:100%;height:auto}.main{margin-left:0;padding:20px}.stats,.products{grid-template-columns:1fr}.header{flex-direction:column;align-items:flex-start;gap:12px}.searchbox{width:100%}.section-head{display:block}.sidebar .menu{display:flex;flex-wrap:wrap}.menu-title{width:100%}}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">UT</div>
+    <h2>SI-DHARMA</h2>
+    <p>Universitas Terbuka</p>
+  </div>
+  <ul class="menu">
+    <li><a href="#" class="active">🏠 <span>Dashboard</span></a></li>
+    <div class="menu-title">Ekosistem Produk</div>
+    <li><a href="#produk">📦 <span>Product Catalog</span></a></li>
+  </ul>
+</aside>
+
+<main class="main">
+  <div class="header">
+    <div>
+      <h1>SI-DHARMA</h1>
+      <p>Sistem Informasi Digital Hasil Karya dan Inovasi Dosen</p>
+    </div>
+    <div class="profile">👤 Program Studi Sistem Informasi</div>
+  </div>
+
+  <section class="hero">
+    <span class="tag">DIGITAL ECOSYSTEM FOR LECTURER PRODUCTS &amp; INNOVATION</span>
+    <h2>Digital Ecosystem for Lecturer Products &amp; Innovation</h2>
+    <p>
+      Platform terintegrasi untuk mendokumentasikan, mengelola, menampilkan,
+      dan memanfaatkan produk dosen Program Studi Sistem Informasi dalam bidang
+      pembelajaran, penelitian, dan pengabdian kepada masyarakat.
+    </p>
+  </section>
+
+  <section class="stats" id="analitik">
+    <div class="stat"><div class="icon">📦</div><div class="number" id="total">3</div><p>Total Produk</p></div>
+    <div class="stat"><div class="icon">📚</div><div class="number">1</div><p>Pembelajaran</p></div>
+    <div class="stat"><div class="icon">🔬</div><div class="number">1</div><p>Penelitian</p></div>
+    <div class="stat"><div class="icon">🤝</div><div class="number">1</div><p>Pengabdian</p></div>
+    <div class="stat"><div class="icon">👨‍🏫</div><div class="number">1</div><p>Dosen Pengembang</p></div>
+  </section>
+
+  <section id="produk">
+    <div class="section-head">
+      <div>
+        <h2>📦 Product Catalog</h2>
+        <p>Daftar produk dan karya dosen Program Studi Sistem Informasi</p>
+      </div>
+      <input class="searchbox" id="search" type="text" placeholder="🔎 Cari produk atau dosen...">
+    </div>
+
+    <div class="filters">
+      <button class="filter active" data-filter="all">📦 Semua Product</button>
+    </div>
+
+    <div class="products" id="productList">
+
+      <div class="card" data-category="pembelajaran" data-name="SI-TRYOUT" data-owner="Tim Dosen Sistem Informasi">
+        <div class="card-top"><div class="product-icon">📝</div><span class="badge">Active</span></div>
+        <h3>SI-TRYOUT</h3><div class="owner">👨‍🏫 Dosen - Andri Suryadi</div>
+        <p>Sistem tryout dan latihan soal untuk mendukung evaluasi serta persiapan mahasiswa.</p>
+        <div class="meta"><span>Pembelajaran</span><span>Web App</span><span>2026</span></div>
+        <button class="btn" onclick="detail('SI-TRYOUT','Dosen - Andri Suryadi','Pembelajaran','Web Application','Sistem tryout dan latihan soal untuk evaluasi dan persiapan mahasiswa.','2026','https://andrisy11.github.io/tryout-cpns/')">Lihat Produk →</button>
+      </div>
+
+      <div class="card" data-category="penelitian" data-name="AI Research Model" data-owner="AI Research Group">
+        <div class="card-top"><div class="product-icon">🤖</div><span class="badge process">On Process</span></div>
+        <h3>AI Research Model</h3><div class="owner">👨‍🏫 AI Research Group</div>
+        <p>Kumpulan model AI dan prototype hasil penelitian dosen Sistem Informasi.</p>
+        <div class="meta"><span>Penelitian</span><span>AI/ML</span><span>2026</span></div>
+        <button class="btn" onclick="detail('AI Research Model','AI Research Group','Penelitian','Artificial Intelligence','Kumpulan model AI dan prototype hasil penelitian dosen.','2026','https://contoh-domain-anda.com/ai-research-model')">Lihat Produk →</button>
+      </div>
+
+      <div class="card" data-category="pengabdian" data-name="SI-PkM" data-owner="Tim Pengabdian">
+        <div class="card-top"><div class="product-icon">🤝</div><span class="badge process">On Process</span></div>
+        <h3>SI-PkM</h3><div class="owner">👨‍🏫 Tim Pengabdian</div>
+        <p>Pengelolaan kegiatan pengabdian kepada masyarakat oleh dosen dan mahasiswa.</p>
+        <div class="meta"><span>Pengabdian</span><span>Community</span><span>2026</span></div>
+        <button class="btn" onclick="detail('SI-PkM','Tim Pengabdian','Pengabdian','Community Platform','Pengelolaan kegiatan pengabdian kepada masyarakat.','2026','https://contoh-domain-anda.com/si-pkm')">Lihat Produk →</button>
+      </div>
+
+    </div>
+</div>
+    <div class="empty" id="empty">Produk yang dicari tidak ditemukan.</div>
+  </section>
+
+  <footer>
+    SI-DHARMA © 2026<br>
+    Program Studi Sistem Informasi – Universitas Terbuka
+  </footer>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <div style="font-size:32px;margin-bottom:10px">📦</div>
+    <h2 id="mTitle"></h2>
+    <div class="owner" id="mOwner"></div>
+    <p id="mDesc"></p>
+    <div class="detail-grid">
+      <div class="detail"><b>KATEGORI</b><span id="mCategory"></span></div>
+      <div class="detail"><b>JENIS PRODUK</b><span id="mType"></span></div>
+      <div class="detail"><b>TAHUN</b><span id="mYear"></span></div>
+      <div class="detail"><b>STATUS</b><span>Aktif / Terdaftar</span></div>
+    </div>
+    <div style="margin-top:18px">
+      <button class="btn" id="openProduct">🚀 Buka Produk</button>
+      <button class="btn secondary" onclick="closeModal()">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentFilter="all";
+
+const filters=document.querySelectorAll(".filter");
+filters.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    filters.forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter=btn.dataset.filter;
+    applyFilter();
+  });
+});
+
+document.getElementById("search").addEventListener("input",applyFilter);
+
+function applyFilter(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  let visible=0;
+  document.querySelectorAll(".card").forEach(card=>{
+    const category=card.dataset.category;
+    const name=(card.dataset.name+" "+card.dataset.owner).toLowerCase();
+    const okCategory=currentFilter==="all"||category===currentFilter;
+    const okSearch=!q||name.includes(q);
+    card.style.display=okCategory&&okSearch?"block":"none";
+    if(okCategory&&okSearch) visible++;
+  });
+  document.getElementById("empty").style.display=visible?"none":"block";
+}
+
+function detail(title,owner,category,type,desc,year,url){
+  document.getElementById("mTitle").textContent=title;
+  document.getElementById("mOwner").textContent="👨‍🏫 "+owner;
+  document.getElementById("mCategory").textContent=category;
+  document.getElementById("mType").textContent=type;
+  document.getElementById("mYear").textContent=year;
+  document.getElementById("mDesc").textContent=desc;
+  document.getElementById("openProduct").onclick=function(){
+    if(url && url !== "#"){
+      window.open(url,"_blank");
+    }else{
+      alert("Link produk belum diatur.");
+    }
+  };
+  document.getElementById("modal").style.display="flex";
+}
+function closeModal(){document.getElementById("modal").style.display="none"}
+window.addEventListener("click",e=>{
+  if(e.target===document.getElementById("modal"))closeModal();
+});
+</script>
+</body>
+</html>
